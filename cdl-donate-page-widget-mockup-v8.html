@@ -1,0 +1,798 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+<title>CDL Donate Page Mockup — Donation Impact Widget Embedded</title>
+<link rel="preconnect" href="https://fonts.googleapis.com" />
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+<link href="https://fonts.googleapis.com/css2?family=Josefin+Sans:wght@300;400;500;600;700&display=swap" rel="stylesheet" />
+<style>
+  :root {
+    --cdl-purple: #5f3895;
+    --cdl-purple-dark: #3d2265;
+    --cdl-purple-soft: #f8ecfb;
+    --cdl-teal: #007f83;
+    --cdl-teal-dark: #00696b;
+    --cdl-teal-soft: #edf9f9;
+    --cdl-aqua-bg: #f3fbfb;
+    --cdl-white: #ffffff;
+    --cdl-ink: #252629;
+    --cdl-muted: #565f62;
+    --cdl-border: #d9ecec;
+    --mock-red: #b42318;
+    --mock-red-soft: #fff2f0;
+    --shadow-card: 0 12px 30px rgba(28, 46, 47, 0.075);
+    --radius-lg: 22px;
+    --radius-md: 15px;
+    --radius-sm: 10px;
+    --font-cdl: "Josefin Sans", -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif;
+  }
+
+  * { box-sizing: border-box; }
+
+  html {
+    scroll-behavior: smooth;
+  }
+
+  html, body {
+    margin: 0;
+    padding: 0;
+    font-family: var(--font-cdl);
+    color: var(--cdl-ink);
+    background: var(--cdl-white);
+    -webkit-font-smoothing: antialiased;
+    text-rendering: geometricPrecision;
+  }
+
+  body {
+    font-size: 14px;
+    line-height: 1.5;
+  }
+
+  a { color: inherit; }
+
+  /* Header retained as context; sizing corrected so the logo no longer overlaps the navigation border. */
+  .site-header {
+    height: 72px;
+    background: #fff;
+    border-bottom: 1px solid rgba(0,0,0,0.07);
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    padding: 0 clamp(20px, 3.8vw, 46px);
+    position: sticky;
+    top: 0;
+    z-index: 20;
+  }
+
+  .logo-wrap {
+    display: inline-flex;
+    align-items: center;
+    text-decoration: none;
+    height: 100%;
+  }
+
+  .logo-wrap img {
+    width: 178px;
+    max-height: 52px;
+    height: auto;
+    display: block;
+    object-fit: contain;
+  }
+
+  .main-nav {
+    display: flex;
+    align-items: center;
+    gap: clamp(18px, 3vw, 38px);
+    font-size: 0.82rem;
+    font-weight: 700;
+    color: var(--cdl-teal-dark);
+  }
+
+  .main-nav a {
+    text-decoration: none;
+    white-space: nowrap;
+  }
+
+  .main-nav a:hover,
+  .main-nav a:focus-visible {
+    color: var(--cdl-purple);
+  }
+
+  .page-banner {
+    background: var(--cdl-white);
+    padding: clamp(42px, 5.2vw, 68px) 20px 0;
+  }
+
+  .banner-inner,
+  .content-shell,
+  .implementation-note {
+    width: min(100% - 40px, 1160px);
+    margin-left: auto;
+    margin-right: auto;
+  }
+
+  .banner-title-card {
+    min-height: 138px;
+    width: 100%;
+    background: linear-gradient(135deg, #6c3aa0 0%, #b479c8 100%);
+    color: white;
+    padding: 31px 42px;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+  }
+
+  .banner-title-card h1 {
+    margin: 0 0 10px;
+    font-size: clamp(1.72rem, 3vw, 2.12rem);
+    line-height: 1;
+    letter-spacing: -0.035em;
+  }
+
+  .breadcrumb {
+    display: flex;
+    gap: 10px;
+    color: rgba(255,255,255,0.92);
+    font-size: 0.76rem;
+    font-weight: 500;
+  }
+
+  .donate-redesign {
+    background: var(--cdl-aqua-bg);
+    padding: clamp(44px, 5vw, 62px) 20px 64px;
+  }
+
+  .intro-grid,
+  .action-grid {
+    display: grid;
+    grid-template-columns: minmax(480px, 1fr) minmax(520px, 570px);
+    gap: 36px;
+    align-items: start;
+  }
+
+  .action-grid {
+    margin-top: 36px;
+    grid-template-columns: minmax(480px, 1fr) minmax(520px, 570px);
+    row-gap: 28px;
+  }
+
+  .action-grid .monthly-card {
+    grid-column: 1;
+    grid-row: 1;
+  }
+
+  .action-grid .giving-card {
+    grid-column: 1;
+    grid-row: 2;
+  }
+
+  .action-grid .zeffy-card {
+    grid-column: 2;
+    grid-row: 1 / span 2;
+  }
+
+  .story-card,
+  .widget-card,
+  .zeffy-card,
+  .monthly-card,
+  .giving-card,
+  .impact-card {
+    background: var(--cdl-white);
+    border: 1px solid var(--cdl-border);
+    border-radius: var(--radius-lg);
+    box-shadow: var(--shadow-card);
+  }
+
+  .story-card,
+  .widget-card,
+  .zeffy-card,
+  .monthly-card,
+  .giving-card,
+  .impact-card {
+    padding: 28px;
+  }
+
+  .story-card {
+    background: transparent;
+    border: 0;
+    border-radius: 0;
+    box-shadow: none;
+    padding: 4px 0 0;
+  }
+
+  .giving-card {
+    background: transparent;
+    border: 0;
+    border-radius: 0;
+    box-shadow: none;
+    padding: 0;
+  }
+
+  .story-card,
+  .widget-card {
+    min-height: 0;
+  }
+
+  .kicker {
+    display: inline-flex;
+    align-items: center;
+    gap: 8px;
+    margin: 0 0 14px;
+    color: var(--cdl-teal-dark);
+    font-size: 0.69rem;
+    font-weight: 800;
+    letter-spacing: 0.12em;
+    text-transform: uppercase;
+  }
+
+  .kicker::before {
+    content: "";
+    width: 9px;
+    height: 9px;
+    border-radius: 999px;
+    background: linear-gradient(135deg, var(--cdl-purple), var(--cdl-teal));
+  }
+
+  .story-card h2 {
+    margin: 0 0 18px;
+    color: var(--cdl-purple-dark);
+    font-size: clamp(1.58rem, 2.55vw, 2.04rem);
+    line-height: 1.04;
+    letter-spacing: -0.045em;
+  }
+
+  .lead {
+    margin: 0 0 17px;
+    color: #252629;
+    font-size: 0.96rem;
+    line-height: 1.5;
+    font-weight: 600;
+  }
+
+  .story-card p {
+    margin: 0 0 15px;
+    color: var(--cdl-muted);
+    font-size: 0.9rem;
+  }
+
+  .impact-snapshot {
+    margin: 22px 0 18px;
+    display: grid;
+    grid-template-columns: repeat(3, minmax(0, 1fr));
+    gap: 12px;
+  }
+
+  .impact-stat {
+    background: var(--cdl-teal-soft);
+    border: 1px solid var(--cdl-border);
+    border-radius: var(--radius-md);
+    padding: 15px 14px 13px;
+    position: relative;
+    overflow: hidden;
+    isolation: isolate;
+    transition: border-color 0.18s ease, box-shadow 0.18s ease, transform 0.18s ease;
+  }
+
+  .impact-stat::before {
+    content: "";
+    position: absolute;
+    inset: 0;
+    background: radial-gradient(circle 105px at var(--glow-x, 50%) var(--glow-y, 50%), rgba(95, 56, 149, 0.26), rgba(95, 56, 149, 0.10) 38%, rgba(95, 56, 149, 0) 72%);
+    opacity: 0;
+    pointer-events: none;
+    transition: opacity 0.18s ease;
+    z-index: 0;
+  }
+
+  .impact-stat:hover,
+  .impact-stat:focus-within {
+    border-color: rgba(95, 56, 149, 0.34);
+    box-shadow: 0 10px 24px rgba(95, 56, 149, 0.13);
+    transform: translateY(-1px);
+  }
+
+  .impact-stat:hover::before,
+  .impact-stat:focus-within::before {
+    opacity: 1;
+  }
+
+  .impact-stat > * {
+    position: relative;
+    z-index: 1;
+  }
+
+  .impact-stat strong {
+    display: block;
+    color: var(--cdl-purple);
+    font-size: 1.85rem;
+    line-height: 0.95;
+    letter-spacing: -0.05em;
+  }
+
+  .impact-stat span {
+    display: block;
+    margin-top: 6px;
+    color: var(--cdl-muted);
+    font-size: 0.78rem;
+    font-weight: 600;
+    line-height: 1.25;
+  }
+
+  .support-points {
+    display: grid;
+    grid-template-columns: 1fr;
+    gap: 11px;
+    margin: 14px 0 0;
+  }
+
+  .support-point {
+    background: var(--cdl-teal-soft);
+    border: 1px solid var(--cdl-border);
+    border-radius: var(--radius-md);
+    padding: 14px 15px;
+  }
+
+  .support-point strong {
+    display: block;
+    margin-bottom: 4px;
+    color: var(--cdl-purple-dark);
+    font-size: 0.89rem;
+    line-height: 1.2;
+  }
+
+  .support-point span {
+    display: block;
+    color: var(--cdl-muted);
+    font-size: 0.84rem;
+    line-height: 1.36;
+  }
+
+  .widget-card {
+    display: flex;
+    flex-direction: column;
+  }
+
+  .widget-card h3,
+  .zeffy-card h3,
+  .monthly-card h3,
+  .giving-card h3 {
+    margin: 0 0 10px;
+    color: var(--cdl-purple-dark);
+    font-size: 1.12rem;
+    letter-spacing: -0.02em;
+    line-height: 1.14;
+  }
+
+  .widget-card p,
+  .zeffy-card p,
+  .monthly-card p,
+  .giving-card p {
+    margin: 0 0 16px;
+    color: var(--cdl-muted);
+    font-size: 0.86rem;
+    line-height: 1.43;
+  }
+
+  .widget-embed-wrap {
+    flex: 1;
+    display: flex;
+    align-items: stretch;
+  }
+
+  .widget-embed {
+    width: 100%;
+    min-height: 650px;
+    height: 650px;
+    display: block;
+    border: 0;
+    border-radius: var(--radius-lg);
+    background: transparent;
+    overflow: hidden;
+  }
+
+  .scroll-donate-note {
+    display: block;
+    margin: 10px 0 0;
+    padding: 14px 18px;
+    border: 1px solid #dcb6eb;
+    border-radius: var(--radius-md);
+    background: #fbecff;
+    color: var(--cdl-purple-dark);
+    font-size: 0.98rem;
+    line-height: 1.25;
+    font-weight: 800;
+    text-align: center;
+    text-decoration: none;
+    box-shadow: 0 8px 18px rgba(95, 56, 149, 0.08);
+  }
+
+  .scroll-donate-note:hover,
+  .scroll-donate-note:focus-visible {
+    border-color: #a85ad8;
+    background: #f6defd;
+    outline: none;
+  }
+
+  .scroll-donate-note span {
+    color: var(--cdl-purple-dark);
+  }
+
+  .left-stack {
+    display: grid;
+    gap: 20px;
+    align-content: start;
+  }
+
+  .monthly-card {
+    background: transparent;
+    border: 0;
+    border-radius: 0;
+    box-shadow: none;
+    padding: 0;
+  }
+
+  .benefit-list {
+    list-style: none;
+    padding: 0;
+    margin: 18px 0 0;
+    display: grid;
+    gap: 12px;
+  }
+
+  .benefit-list li {
+    display: grid;
+    grid-template-columns: 25px 1fr;
+    gap: 10px;
+    color: var(--cdl-muted);
+    font-size: 0.86rem;
+    line-height: 1.4;
+  }
+
+  .benefit-list li::before {
+    content: "✓";
+    width: 25px;
+    height: 25px;
+    border-radius: 999px;
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    color: white;
+    background: var(--cdl-teal);
+    font-size: 0.78rem;
+    font-weight: 800;
+    margin-top: 1px;
+  }
+
+  .button-stack {
+    display: grid;
+    gap: 11px;
+    margin-top: 16px;
+  }
+
+  .teal-button {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    min-height: 44px;
+    padding: 11px 18px;
+    border-radius: 999px;
+    background: var(--cdl-teal);
+    color: white;
+    text-decoration: none;
+    font-weight: 800;
+    font-size: 0.84rem;
+    box-shadow: 0 8px 18px rgba(0, 127, 131, 0.15);
+  }
+
+  .teal-button:hover,
+  .teal-button:focus-visible {
+    background: var(--cdl-purple);
+  }
+
+  .mockup-alert,
+  .implementation-note {
+    font-family: Arial, Helvetica, sans-serif;
+    background: var(--mock-red-soft);
+    border: 1px solid rgba(180, 35, 24, 0.35);
+    border-left: 5px solid var(--mock-red);
+    color: #5f1610;
+    border-radius: 10px;
+    padding: 12px 14px;
+    font-size: 13px;
+    line-height: 1.4;
+  }
+
+  .mockup-alert {
+    margin: 0 0 18px;
+  }
+
+  .mockup-alert strong,
+  .implementation-note strong {
+    display: inline-flex;
+    align-items: center;
+    padding: 2px 7px;
+    margin-right: 6px;
+    border-radius: 999px;
+    background: var(--mock-red);
+    color: #fff;
+    font-size: 11px;
+    letter-spacing: 0.03em;
+    text-transform: uppercase;
+  }
+
+  .zeffy-mock {
+    border-radius: 20px;
+    background: #fbecff;
+    border: 1px solid #efd6f7;
+    padding: 24px;
+    min-height: 560px;
+  }
+
+  .zeffy-mock h4 {
+    margin: 0 0 14px;
+    text-align: center;
+    color: var(--cdl-purple-dark);
+    font-size: 0.96rem;
+  }
+
+  .donation-tabs,
+  .amount-grid {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 8px;
+    margin-bottom: 12px;
+  }
+
+  .donation-tabs button,
+  .amount-grid button,
+  .other-amount {
+    border: 1px solid #dcb6eb;
+    border-radius: 10px;
+    background: #fff7ff;
+    color: var(--cdl-purple-dark);
+    min-height: 42px;
+    font-family: inherit;
+    font-weight: 800;
+    font-size: 0.86rem;
+  }
+
+  .donation-tabs button.active {
+    background: #deb8f2;
+    border-color: #a85ad8;
+  }
+
+  .other-amount {
+    width: 100%;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    padding: 0 16px;
+    color: #aeb0b2;
+    font-size: 1.16rem;
+  }
+
+  .zeffy-note {
+    display: grid;
+    grid-template-columns: 24px 1fr;
+    gap: 10px;
+    background: #f2dcfb;
+    border-radius: 12px;
+    padding: 13px;
+    margin-top: 12px;
+    color: var(--cdl-purple-dark);
+    font-size: 0.82rem;
+    line-height: 1.35;
+  }
+
+  .zeffy-logo {
+    margin-top: 24px;
+    text-align: center;
+    color: #a36bbd;
+    font-weight: 800;
+    opacity: 0.7;
+  }
+
+  .implementation-note {
+    margin-top: 34px;
+  }
+
+  .site-footer {
+    background: #fff;
+    color: var(--cdl-muted);
+    padding: 32px 20px;
+    text-align: center;
+    font-size: 0.84rem;
+    border-top: 1px solid var(--cdl-border);
+  }
+
+  @media (max-width: 1160px) {
+    .intro-grid,
+    .action-grid {
+      grid-template-columns: 1fr;
+    }
+
+    .action-grid .monthly-card,
+    .action-grid .giving-card,
+    .action-grid .zeffy-card {
+      grid-column: 1;
+      grid-row: auto;
+    }
+
+    .action-grid .monthly-card { order: 1; }
+    .action-grid .zeffy-card { order: 2; }
+    .action-grid .giving-card { order: 3; }
+
+    .story-card,
+    .widget-card {
+      min-height: auto;
+    }
+
+    .widget-card {
+      max-width: 640px;
+    }
+
+    .widget-embed {
+      height: 650px;
+      min-height: 650px;
+    }
+  }
+
+  @media (max-width: 900px) {
+    .main-nav { display: none; }
+    .logo-wrap img { width: 168px; max-height: 48px; }
+    .impact-snapshot { grid-template-columns: 1fr; }
+  }
+
+  @media (max-width: 560px) {
+    body { font-size: 14.5px; }
+    .site-header { height: 64px; }
+    .logo-wrap img { width: 150px; max-height: 44px; }
+    .page-banner { padding-top: 34px; }
+    .banner-title-card { padding: 28px 24px; }
+    .donate-redesign { padding-inline: 16px; }
+    .banner-inner,
+    .content-shell,
+    .implementation-note { width: min(100% - 32px, 1160px); }
+    .story-card,
+    .widget-card,
+    .zeffy-card { padding: 22px; }
+    .monthly-card,
+    .giving-card { padding: 0; }
+    .widget-embed { height: 620px; min-height: 620px; }
+    .scroll-donate-note { font-size: 1.08rem; padding: 16px 18px; }
+  }
+</style>
+</head>
+<body>
+  <header class="site-header" aria-label="Centre for Diverse Learners site header">
+    <a class="logo-wrap" href="https://diverselearners.ca/" aria-label="Centre for Diverse Learners home">
+      <img src="https://diverselearners.ca/wp-content/uploads/2022/11/centre-for-diverse-learners_logo_simple.png" alt="Centre for Diverse Learners logo" />
+    </a>
+    <nav class="main-nav" aria-label="Primary navigation">
+      <a href="https://diverselearners.ca/about-us/">About Us</a>
+      <a href="https://diverselearners.ca/programs/">Programs</a>
+      <a href="https://diverselearners.ca/need-help/">Need Help?</a>
+      <a href="https://diverselearners.ca/get-involved/">Get Involved</a>
+      <a href="https://diverselearners.ca/donate/">Donate</a>
+    </nav>
+  </header>
+
+  <section class="page-banner" aria-label="Donate page banner">
+    <div class="banner-inner">
+      <div class="banner-title-card">
+        <h1>Donate</h1>
+        <div class="breadcrumb" aria-label="Breadcrumb"><span>⌂ Home</span><span>›</span><span>Donate</span></div>
+      </div>
+    </div>
+  </section>
+
+  <main class="donate-redesign">
+    <div class="content-shell intro-grid">
+      <article class="story-card">
+        <p class="kicker">Why your gift matters</p>
+        <h2>Help students with Learning Disabilities learn, connect, and thrive.</h2>
+        <p class="lead">Centre for Diverse Learners provides academic and social programming for children, youth, and adults with Learning Disabilities and their families across Halton and Hamilton.</p>
+        <p>CDL is a registered charitable organization and does not receive government funding for its initiatives. Donations help keep programs accessible and low-cost while supporting continuity between funding cycles.</p>
+
+        <div class="impact-snapshot" aria-label="2024 to 2025 impact snapshot">
+          <div class="impact-stat"><strong>800+</strong><span>total learners served in 2024–25</span></div>
+          <div class="impact-stat"><strong>1,020+</strong><span>served through advocacy, resource calls, and free workshops</span></div>
+          <div class="impact-stat"><strong>20+</strong><span>workshops, conference sessions, and panels hosted</span></div>
+        </div>
+
+        <p>Your support helps learners build literacy, math, executive functioning, social confidence, and classroom readiness through programs designed for their strengths, challenges, and learning needs.</p>
+
+        <div class="support-points" aria-label="Examples of donor supported programming">
+          <div class="support-point">
+            <strong>Academic growth</strong>
+            <span>Reading, math, homework-health, and individualized learning support.</span>
+          </div>
+          <div class="support-point">
+            <strong>Social confidence</strong>
+            <span>Programs that support friendships, emotional regulation, and belonging.</span>
+          </div>
+          <div class="support-point">
+            <strong>Family advocacy</strong>
+            <span>Guidance and workshops that help parents navigate learning needs.</span>
+          </div>
+        </div>
+      </article>
+
+      <section class="widget-card" aria-labelledby="impactWidgetHeading">
+        <h3 id="impactWidgetHeading">See what your gift can make possible</h3>
+        <p>Use the impact calculator to compare one-time and monthly support before choosing a gift amount.</p>
+        <div class="widget-embed-wrap">
+          <iframe
+            class="widget-embed"
+            src="https://kaegints.github.io/CDL/"
+            title="Donation impact calculator"
+            scrolling="no"
+            loading="lazy">
+          </iframe>
+        </div>
+        <a class="scroll-donate-note" href="#donation-form">Scroll below to donate <span>↓</span></a>
+      </section>
+    </div>
+
+    <div class="content-shell action-grid">
+      <section class="monthly-card" aria-labelledby="monthlyDonorHeading">
+        <h3 id="monthlyDonorHeading">Monthly donors help CDL plan ahead.</h3>
+        <p>Consistent giving gives CDL a more reliable base of support for programs, materials, workshops, and learner services between funding cycles.</p>
+        <ul class="benefit-list">
+          <li><span><strong>Steady program support:</strong> help CDL maintain low-cost academic and social programming throughout the school year.</span></li>
+          <li><span><strong>Simple monthly giving:</strong> choose an amount that fits your budget and adjust it if your circumstances change.</span></li>
+          <li><span><strong>Clear donor records:</strong> receive charitable tax receipt information for eligible donations through the donation platform.</span></li>
+        </ul>
+      </section>
+
+      <section class="zeffy-card" id="donation-form" aria-labelledby="zeffyHeading">
+        <h3 id="zeffyHeading">Choose your donation amount</h3>
+        <div class="mockup-alert"><strong>Mockup</strong> Replace this visual block with CDL’s live Zeffy embed code during implementation.</div>
+        <div class="zeffy-mock" aria-label="Mock Zeffy donation form placeholder">
+          <h4>Choose your donation amount:</h4>
+          <div class="donation-tabs">
+            <button type="button">One-time</button>
+            <button type="button" class="active">❤ Monthly</button>
+          </div>
+          <div class="amount-grid">
+            <button type="button">$10</button>
+            <button type="button">$25</button>
+            <button type="button">$35</button>
+            <button type="button">$45</button>
+          </div>
+          <div class="other-amount"><span>$ Other</span><span>/month</span></div>
+          <div class="zeffy-note"><span>▣</span><span>You’ll receive a tax receipt for making a donation.</span></div>
+          <div class="zeffy-note"><span>♡</span><span>CDL fundraises with Zeffy so more of your donation can support the mission.</span></div>
+          <div class="zeffy-logo">zeffy</div>
+        </div>
+      </section>
+
+      <section class="giving-card" aria-labelledby="otherWaysHeading">
+        <h3 id="otherWaysHeading">Other ways to give</h3>
+        <p>Prefer to honour someone, give securities, or mail a donation? Use the options below to give in the format that works best for you.</p>
+        <div class="button-stack">
+          <a class="teal-button" href="https://diverselearners.ca/donate/">Tribute Donations</a>
+          <a class="teal-button" href="https://diverselearners.ca/donate/">Securities Donations</a>
+          <a class="teal-button" href="https://diverselearners.ca/donate/">Direct Mail Donations</a>
+        </div>
+      </section>
+    </div>
+  </main>
+
+  <footer class="site-footer">
+    Centre for Diverse Learners · Rotary Youth Centre · 560 Guelph Line, Burlington, ON · Charitable Registration Number: 119010387RR0001
+  </footer>
+
+  <script>
+    document.querySelectorAll('.impact-stat').forEach(function (card) {
+      card.addEventListener('mousemove', function (event) {
+        var rect = card.getBoundingClientRect();
+        card.style.setProperty('--glow-x', (event.clientX - rect.left) + 'px');
+        card.style.setProperty('--glow-y', (event.clientY - rect.top) + 'px');
+      });
+    });
+  </script>
+</body>
+</html>
